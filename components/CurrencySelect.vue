@@ -8,11 +8,7 @@
       v-model="value"
       @change="$emit('on-change', value)"
     >
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="COP">COP</option>
-      <option value="GBP">GBP</option>
-      <option value="CNY">CNY</option>
+      <option :key="option.value" :value="option.value" v-for="option in options">{{ option.text }}</option>
     </select>
   </div>
 </template>
@@ -25,14 +21,29 @@ export default {
   },
   data() {
     return {
-      value: this.currency
+      value: this.currency,
+      options: []
     };
+  },
+  methods: {
+    getCurrencyOptions() {
+      this.options = [
+        { text: 'USD', value: 'USD' },
+        { text: 'EUR', value: 'EUR' },
+        { text: 'COP', value: 'COP' },
+        { text: 'GBP', value: 'GBP' },
+        { text: 'CNY', value: 'CNY' }
+      ];
+    }
   },
   computed: {
     getImg() {
       const src = require(`../assets/img/flags/${this.value}.png`);
       return src;
     }
+  },
+  created() {
+    this.getCurrencyOptions();
   }
 };
 </script>
